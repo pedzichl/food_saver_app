@@ -21,16 +21,15 @@
     <div class="">
         <ul>
             {% if user.is_authenticated %}
-                <a href="{% url 'home' %}">Home</a>
-                <a href="{% url 'add-product' %}">Add product</a>
-                <a href="{% url 'products-list' %}">Products list</a>
-                <a href="{% url 'profile' %}">Your profile</a>
-                <a href="{% url 'user-products' %}">User products</a>
+                <a href="{% url 'home' %}" class="btn btn-primary">Home</a>
+                <a href="{% url 'add-product' %}"class="btn btn-primary">Add product</a>
+                <a href="{% url 'products-list' %}"class="btn btn-primary">All products list</a>
+                <a href="{% url 'profile' %}"class="btn btn-primary">Your profile</a>
+                <a href="{% url 'user-products' %}"class="btn btn-primary">Your products</a>
 
             {% else %}
-                <a href="{% url 'home' %}">Home</a>
-                <a href="{% url 'add-product' %}">Add product</a>
-                <a href="{% url 'products-list' %}">Products list</a>
+                <a href="{% url 'home' %}"class="btn btn-primary">Home</a>
+                <a href="{% url 'products-list' %}"class="btn btn-primary">All products list</a>
             {% endif %}
         </ul>
     </div>

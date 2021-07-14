@@ -4,12 +4,12 @@
 <div>
 {% if user.is_authenticated %}
 Hello, {{ user.username|default:'Guest' }}!
-  <p><a href="{% url 'logout' %}">Log Out</a></p>
+  <p><a href="{% url 'logout' %}" class="btn btn-primary">Log Out</a></p>
 {% else %}
   <p>You are not logged in</p>
-    <p><a href="{% url 'login' %}">Log In</a></p>
-    <p><a href="{% url 'signup' %}">Sign up</a></p>
-    <p><a href="{% url 'password_reset' %}">Reset Password</a></p>
+    <p><a href="{% url 'login' %}" class="btn btn-primary">Log In</a></p>
+    <p><a href="{% url 'signup' %}" class="btn btn-primary">Sign up</a></p>
+    <p><a href="{% url 'password_reset' %}" class="btn btn-primary">Reset Password</a></p>
 
 {% endif %}
 </div>

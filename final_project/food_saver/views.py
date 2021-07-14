@@ -79,14 +79,13 @@ class UsersProductsView(View):
         current_user = request.user.username
         user = ParticularUser.objects.get(username=current_user)
         get_products = ProductParticularUser.objects.filter(user=user.id)
-        id_products = []
-        for p in get_products:
-            id_products.append(p.id)
-        products = Product.objects.filter(id_products=id_products)
+        product_ids = []
+        for product_id in get_products:
+            product_ids.append(product_id.product_id)
+        products = Product.objects.filter(id__in=product_ids)
 
 
-
-        return render(request, 'user-products.html', context={'products': tuple_id_products})
+        return render(request, 'user-products.html', context={'products': products})
 
 
 # class GetProductsView(View):
