@@ -1,10 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Add product</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+    {% block content %}
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Add product">
+    </form>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+    {% block content %}
+
+        <table class="table">
+        <tbody>
+                 <tr class="d-flex">
+                    <th scope="row" class="col-2">Added by</th>
+                    <td class="col-7">
+                        {{ username.user.username}}
+                    </td>
+                <tr class="d-flex">
+                    <th scope="row" class="col-2">Product's name</th>
+                    <td class="col-7">
+                        {{ product.name }}
+                    </td>
+                </tr>
+                <tr class="d-flex">
+                    <th scope="row" class="col-2">Product's expiration date</th>
+                    <td class="col-7">{{ product.expiration_date }}</td>
+                </tr>
+                <tr class="d-flex">
+                    <th scope="row" class="col-2">Product's quantity</th>
+                    <td class="col-7">{{ product.quantity }}</td>
+                </tr>
+                <tr class="d-flex">
+                    <th scope="row" class="col-2">Unit</th>
+                    <td class="col-7">{{ product.get_unit_display }}</td>
+                </tr>
+                <tr class="d-flex">
+                    <th scope="row" class="col-2">Product's type</th>
+                    <td class="col-7">{{ product.get_type_display }}</td>
+                </tr>
+        </tbody>
+        </table>
+{% endblock %}

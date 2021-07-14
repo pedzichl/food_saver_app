@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+    {% block content %}
+        <table class="table table-bordered table-sm table-striped">
+            <tr>
+                <th>Name</th>
+                <th>Expiration date</th>
+                <th>Quantity</th>
+                <th>Unit</th>
+                <th>Type</th>
+                <th>Image</th>
+            </tr>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>{{ product.expiration_date }}</td>
+                <td>{{ product.quantity }}</td>
+                <td>{{ product.get_unit_display }}</td>
+                <td>{{ product.get_type_display }}</td>
+                <td>{{ product.image }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+{% endblock %}
