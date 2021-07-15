@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from .forms import AddProductForm
-from .models import Product, ParticularUser, ProductParticularUser
+from .models import Product, ProductUser
 from django.contrib.auth.models import User
 from django.views import generic, View
 from .forms import UserRegisterForm
@@ -22,17 +22,18 @@ class AddProduct(View):
     def post(self, request):
         form = AddProductForm(request.POST, request.FILES)
         if form.is_valid():
+            current_user = request.user.username
+            user_db = User.objects.get(username=current_user)
             name = form.cleaned_data ['name']
             expiration_date = form.cleaned_data ['expiration_date']
             quantity = form.cleaned_data ['quantity']
             unit = form.cleaned_data ['unit']
             type = int(form.cleaned_data ['type'])
-            image = form.cleaned_data ['image']
+            image = form.cleaned_data['image']
             new_product = Product.objects.create(name=name, expiration_date=expiration_date,
-                                                 quantity=quantity, unit=unit,type=type, image=image)
-            current_user = request.user.username
-            user_db = ParticularUser.objects.get(username=current_user)
-            assign_to_user = ProductParticularUser.objects.create(product=new_product, user=user_db)
+                                                 quantity=quantity, unit=unit,type=type, image=image, user=user_db)
+
+            assign_to_user = ProductUser.objects.create(product=new_product, user=user_db)
             return redirect('single-product', id=new_product.id)
 
 
@@ -46,8 +47,8 @@ class ProductsList(View):
 class SingleProductView(View):
     def get(self, request, id):
         product = Product.objects.get(id=id)
-        get_user = ParticularUser.objects.get(username=request.user.username)
-        username = ProductParticularUser.objects.get(product=product.id)
+        get_user = User.objects.get(username=request.user.username)
+        username = ProductUser.objects.get(product=product.id)
 
         return render(request, "product-details.html", context={"product":product,
                                                                 "username": username})
@@ -59,11 +60,6 @@ class SignUpView(View):
     def post(self, request):
         form = UserRegisterForm(request.POST)
         if form.is_valid():
-            username = form.cleaned_data ['username']
-            email = form.cleaned_data ['email']
-            first_name = form.cleaned_data ['first_name']
-            last_name = form.cleaned_data ['last_name']
-            new_user_db = ParticularUser.objects.create(username=username, email=email, first_name=first_name,last_name=last_name)
             user = form.save()
             return redirect(('login'))
 
@@ -77,8 +73,8 @@ class ProfileView(View):
 class UsersProductsView(View):
     def get(self, request):
         current_user = request.user.username
-        user = ParticularUser.objects.get(username=current_user)
-        get_products = ProductParticularUser.objects.filter(user=user.id)
+        user = User.objects.get(username=current_user)
+        get_products = ProductUser.objects.filter(user=user.id)
         product_ids = []
         for product_id in get_products:
             product_ids.append(product_id.product_id)
@@ -87,11 +83,44 @@ class UsersProductsView(View):
 
         return render(request, 'user-products.html', context={'products': products})
 
+    def post(self, request):
+        items_to_delete = request.POST.getlist('delete')
+        Product.objects.filter(pk__in=items_to_delete).delete()
+        current_user = request.user.username
+        user = User.objects.get(username=current_user)
+        get_products = ProductUser.objects.filter(user=user.id)
+        product_ids = []
+        for product_id in get_products:
+            product_ids.append(product_id.product_id)
+        products = Product.objects.filter(id__in=product_ids)
+        return render(request, 'user-products.html', context={'products': products})
 
-# class GetProductsView(View):
-#     def get(self, request):
-#         current_user = request.user.username
-#         user = ParticularUser.objects.get(username=current_user)
-#         return render(request, 'get-products.html', context={'products': products})
+
+
+class GetProductsView(View):
+    def get(self, request):
+        current_user = request.user.username
+        user = User.objects.get(username=current_user)
+        get_products = ProductUser.objects.exclude(user=user.id)
+        product_ids = []
+        for product_id in get_products:
+            product_ids.append(product_id.product_id)
+        products = Product.objects.filter(id__in=product_ids)
+
+        return render(request, 'get-products.html', context={'products': products})
+
+    def post(self, request):
+        current_user = request.user.username
+        user = User.objects.get(username=current_user)
+        product_to_get = request.POST.getlist('get')
+        get_products = ProductUser.objects.exclude(user=user)
+        product_ids = []
+        for product_id in get_products:
+            product_ids.append(product_id.product_id)
+        products = Product.objects.filter(id__in=product_ids)
+        ProductUser.objects.filter(product_id__in=product_to_get).update(user_id=user)
+
+
+        return render(request, 'get-products.html', context={'products': products})
 
 

@@ -9,8 +9,11 @@
                 <th>Unit</th>
                 <th>Type</th>
                 <th>Image</th>
+                <th>Actions</th>
             </tr>
             {% for product in products %}
+                <form method="post">
+                {% csrf_token %}
             <tr>
                 <td>{{ product.name }}</td>
                 <td>{{ product.expiration_date }}</td>
@@ -18,6 +21,8 @@
                 <td>{{ product.get_unit_display }}</td>
                 <td>{{ product.get_type_display }}</td>
                 <td>{{ product.image }}</td>
+                <td><button  type="submit" name="delete" value="{{ product.pk }}">Delete Product</td>
             </tr>
+                </form>
 {%  endfor %}
 {% endblock %}

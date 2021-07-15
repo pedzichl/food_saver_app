@@ -3,7 +3,7 @@ from .models import Product
 # Register your models here.
 
 class AddProduct(admin.ModelAdmin):
-    fields = ['name', 'expiration_date', 'quantity', 'unit', 'type']
+    fields = ['name', 'expiration_date', 'quantity', 'unit', 'type', 'image']
 
 admin.site.register(Product, AddProduct)
 
