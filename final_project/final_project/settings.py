@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'food_saver',
     'crispy_forms',
+    "phonenumber_field",
 ]
 
 MIDDLEWARE = [

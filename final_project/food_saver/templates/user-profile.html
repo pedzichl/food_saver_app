@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<h2>Your profile</h2>
+    <table class="table">
+      <tr>
+            <td>Login</td>
+            <td>{{ user.user.username }}</td>
+        </tr>
+        <tr>
+            <td>First name</td>
+            <td>{{ user.user.first_name }}</td>
+        </tr>
+        <tr>
+            <td>Last name</td>
+            <td>{{ user.user.last_name }}</td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>{{ user.user.email }}</td>
+        </tr>
+        <tr>
+            <td>Location</td>
+            <td>{{ user.city }}</td>
+        </tr>
+
+    </table>
+
+
+{% endblock %}

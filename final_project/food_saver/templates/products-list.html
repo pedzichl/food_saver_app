@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
     {% block content %}
+<h2>List of all products</h2>
         <table class="table table-bordered table-sm table-striped">
             <tr>
                 <th>Added by</th>
@@ -20,7 +21,9 @@
                 <td>{{ product.get_unit_display }}</td>
                 <td>{{ product.get_type_display }}</td>
                 {%  if product.image %}
-                <td><img src="{{ product.image.url }}"></td>
+                <td><a href="{{ product.image.url }}"><img src="{{ product.image.thumbnail.url }}"></td>
+                {% else %}
+                <td><a href="http://127.0.0.1:8000/media/media/default_product.png"><img src="http://127.0.0.1:8000/media/media/default_product.png"></a></td>
                 {%  endif %}
 
             </tr>

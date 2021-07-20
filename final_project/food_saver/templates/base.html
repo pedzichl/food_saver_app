@@ -24,9 +24,10 @@
                 <a href="{% url 'home' %}" class="btn btn-primary">Home</a>
                 <a href="{% url 'add-product' %}"class="btn btn-primary">Add your product</a>
                 <a href="{% url 'products-list' %}"class="btn btn-primary">All products list</a>
-                <a href="{% url 'profile' %}"class="btn btn-primary">Your profile</a>
-                <a href="{% url 'user-products' %}"class="btn btn-primary">Your products</a>
+                <a href="{% url 'user-profile' %}"class="btn btn-primary">Your profile</a>
+                <a href="{% url 'user-products' %}"class="btn btn-primary">Your products to give</a>
                 <a href="{% url 'get-products' %}"class="btn btn-primary">Save a product</a>
+                <a href="{% url 'saved-products' %}"class="btn btn-primary">Your saved products</a>
 
             {% else %}
                 <a href="{% url 'home' %}"class="btn btn-primary">Home</a>

@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
     {% block content %}
+<h2>Save some products</h2>
        <table class="table table-bordered table-sm table-striped">
             <tr>
                 <td>Added by</td>
@@ -22,7 +23,11 @@
                 <td>{{ product.quantity }}</td>
                 <td>{{ product.get_unit_display }}</td>
                 <td>{{ product.get_type_display }}</td>
-                <td>{{ product.image }}</td>
+                {%  if product.image %}
+                <td><a href="{{ product.image.url }}"><img src="{{ product.image.thumbnail.url }}"></td>
+                {% else %}
+                <td><a href="http://127.0.0.1:8000/media/media/default_product.png"><img src="http://127.0.0.1:8000/media/media/default_product.png"></a></td>
+                {%  endif %}
                 <td><button  type="submit" name="get" value="{{ product.pk }}">Get this product</td>
             </tr>
                 </form>
